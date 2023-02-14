@@ -75,8 +75,8 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     stack.append(start_word)
     queue = deque()
     queue.append(stack)
-    with open('words5.dict') as e:
-        dictionary = [x.strip() for x in e.readlines()]
+    with open('words5.dict') as d:
+        dictionary = [x.strip() for x in d.readlines()]
     while len(queue) != 0:
         current_stack = queue.popleft()
         dict_copy = copy.copy(dictionary)
