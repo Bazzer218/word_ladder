@@ -90,7 +90,7 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     while len(queue) != 0:      
         current_stack = queue.popleft() 
         dictionary_copy = copy.copy(dictionary)
-        dictionary_copy = [d for d in dictionary_copy if d not in current_stack]
+        dictionary_copy = [w for w in dictionary_copy if w not in current_stack]
         for i in dictionary_copy:
             if _adjacent(i,current_stack[-1]):
                 if i == end_word:
