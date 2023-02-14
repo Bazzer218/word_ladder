@@ -3,6 +3,7 @@
 from collections import deque
 import copy
 
+
 def _adjacent(word1, word2):
     '''
     Returns True if the input words differ by only a single character;
@@ -19,7 +20,7 @@ def _adjacent(word1, word2):
     for i in list(range(len(word1))):
         if word1[i] != word2[i]:
             errors += 1
-    
+
     if errors != 1:
         return False
     else:
@@ -38,14 +39,15 @@ def verify_word_ladder(ladder):
     '''
     if ladder == []:
         return False
-    
+
     if len(ladder) == 1:
         return True
 
     for i in list(range(len(ladder)-1)):
-        if _adjacent(ladder[i],ladder[i+1]) == False:
+        if not _adjacent(ladder[i], ladder[i+1]):
             return False
     return True
+
 
 def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     '''
@@ -62,17 +64,6 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     ```
     may give the output
     ```
-    ['stone', 'shone', 'phone', 'phony', 'peony', 'penny', 'benny', 'bonny', 'boney', 'money']
-    ```
-    but the possible outputs are not unique,
-    so you may also get the output
-    ```
-    ['stone', 'shone', 'shote', 'shots', 'soots', 'hoots', 'hooty', 'hooey', 'honey', 'money']
-    ```
-    (We cannot use doctests here because the outputs are not unique.)
-
-    Whenever it is impossible to generate a word ladder between the two words,
-    the function returns `None`.
     '''
     if start_word == end_word:
         return [start_word]
@@ -86,13 +77,12 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     queue.append(stack)
     with open('words5.dict') as d:
         dictionary = [x.strip() for x in d.readlines()]
-    #dictionary_copy = copy.copy(dictionary) 
-    while len(queue) != 0:      
-        current_stack = queue.popleft() 
-        dictionary_copy = copy.copy(dictionary)
-        dictionary_copy = [w for w in dictionary_copy if w not in current_stack]
-        for i in dictionary_copy:
-            if _adjacent(i,current_stack[-1]):
+    while len(queue) != 0:
+        current_stack = queue.popleft()
+        dict_copy = copy.copy(dictionary)
+        dict_copy = [w for w in dict_copy if w not in current_stack]
+        for i in dict_copy:
+            if _adjacent(i, current_stack[-1]):
                 if i == end_word:
                     current_stack.append(i)
                     return current_stack
@@ -100,25 +90,5 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
                     stack_copy = copy.copy(current_stack)
                     stack_copy.append(i)
                     queue.append(stack_copy)
-                    dictionary_copy.remove(i)
+                    dict_copy.remove(i)
     return None
-        
-        
-        
-        #for i in dictionary:
-         #   if _adjacent(i,stack[0]):
-          #      if i == end_word:
-           #         stack_copy = copy.copy(stack)
-            #    else:
-                    
-                    
-             #       stack_copy.append(i)
-              #      queue.append(stack_copy)
-               #     dictionary.pop(i)
-                #    dictionary.remove(i)
-    #return None        
-
-#while len(queue) != 0:
-
-
-
